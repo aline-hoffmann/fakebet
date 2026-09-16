@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FakeBet</title>
+
+    <link rel="stylesheet" href="/static/style.css">
+
+</head>
+
+<body>
+
+    <header>
+
+        <h1>FAKEBET</h1>
+
+        <p>Simulador de apostas</p>
+
+    </header>
+
+
+    <main>
+
+        <section class="usuario">
+
+            <label>Seu nome:</label>
+
+            <input
+                type="text"
+                id="usuario"
+                placeholder="Digite seu nome"
+            >
+
+            <p>
+                Saldo fictício:
+                <strong>R$ <span id="saldo">1000.00</span></strong>
+            </p>
+
+        </section>
+
+
+        <h2>Jogos disponíveis</h2>
+
+
+        <section class="jogo">
+
+            <h3>Grêmio x Internacional</h3>
+
+            <div class="times">
+
+                <button onclick="selecionarTime('Grêmio', 1.90)">
+                    Grêmio
+                    <span>1.90</span>
+                </button>
+
+                <button onclick="selecionarTime('Internacional', 2.10)">
+                    Internacional
+                    <span>2.10</span>
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <section class="jogo">
+
+            <h3>Flamengo x Palmeiras</h3>
+
+            <div class="times">
+
+                <button onclick="selecionarTime('Flamengo', 1.75)">
+                    Flamengo
+                    <span>1.75</span>
+                </button>
+
+                <button onclick="selecionarTime('Palmeiras', 2.30)">
+                    Palmeiras
+                    <span>2.30</span>
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <section class="jogo">
+
+            <h3>Corinthians x São Paulo</h3>
+
+            <div class="times">
+
+                <button onclick="selecionarTime('Corinthians', 2.00)">
+                    Corinthians
+                    <span>2.00</span>
+                </button>
+
+                <button onclick="selecionarTime('São Paulo', 1.95)">
+                    São Paulo
+                    <span>1.95</span>
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <section class="apostar">
+
+            <h2>Fazer aposta</h2>
+
+            <p>
+                Time:
+                <strong id="timeSelecionado">
+                    nenhum
+                </strong>
+            </p>
+
+            <input
+                type="number"
+                id="valor"
+                placeholder="Valor da aposta"
+            >
+
+            <button id="botaoApostar" onclick="apostar()">
+                Apostar
+            </button>
+
+        </section>
+
+
+        <section class="feed">
+
+            <h2>Apostas em tempo real</h2>
+
+            <div id="mensagens">
+
+                <p class="info">
+                    Aguardando apostas...
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <script src="/static/app.js"></script>
+
+</body>
+
+</html>
