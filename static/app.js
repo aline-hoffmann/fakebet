@@ -1,10 +1,8 @@
 let socket;
 
 let timeSelecionado = null;
-
 let oddSelecionada = null;
-
-let saldo = 1000;
+let usuarioRegistrado = false;
 
 
 function conectar() {
@@ -25,9 +23,54 @@ function conectar() {
 
         const mensagem = JSON.parse(event.data);
 
-        if (mensagem.tipo === "nova_aposta") {
 
-            mostrarAposta(mensagem.dados);
+        if (mensagem.tipo === "usuario_registrado") {
+
+            usuarioRegistrado = true;
+
+            atualizarSaldo(
+                mensagem.dados.saldo
+            );
+
+            document.getElementById(
+                "usuario"
+            ).disabled = true;
+
+            document.getElementById(
+                "botaoEntrar"
+            ).disabled = true;
+
+            adicionarMensagem(
+                "Você entrou como " +
+                mensagem.dados.usuario
+            );
+
+        }
+
+
+        else if (mensagem.tipo === "saldo_atualizado") {
+
+            atualizarSaldo(
+                mensagem.dados.saldo
+            );
+
+        }
+
+
+        else if (mensagem.tipo === "nova_aposta") {
+
+            mostrarAposta(
+                mensagem.dados
+            );
+
+        }
+
+
+        else if (mensagem.tipo === "erro") {
+
+            alert(
+                mensagem.dados.mensagem
+            );
 
         }
 
@@ -38,7 +81,62 @@ function conectar() {
 
         console.log("Conexão encerrada");
 
+        adicionarMensagem(
+            "Conexão com o servidor encerrada."
+        );
+
     };
+
+
+    socket.onerror = function() {
+
+        console.log("Erro no WebSocket");
+
+    };
+
+}
+
+
+function entrar() {
+
+    const usuario =
+        document.getElementById(
+            "usuario"
+        ).value.trim();
+
+
+    if (!usuario) {
+
+        alert("Digite seu nome.");
+
+        return;
+
+    }
+
+
+    if (socket.readyState !== WebSocket.OPEN) {
+
+        alert("O servidor ainda não está conectado.");
+
+        return;
+
+    }
+
+
+    const mensagem = {
+
+        tipo: "entrar",
+
+        dados: {
+            usuario: usuario
+        }
+
+    };
+
+
+    socket.send(
+        JSON.stringify(mensagem)
+    );
 
 }
 
@@ -46,28 +144,22 @@ function conectar() {
 function selecionarTime(time, odd) {
 
     timeSelecionado = time;
-
     oddSelecionada = odd;
+
 
     document.getElementById(
         "timeSelecionado"
-    ).textContent = time + " - odd " + odd;
+    ).textContent =
+        time + " - odd " + odd;
 
 }
 
 
 function apostar() {
 
-    const usuario =
-        document.getElementById("usuario").value.trim();
+    if (!usuarioRegistrado) {
 
-    const valor =
-        Number(document.getElementById("valor").value);
-
-
-    if (!usuario) {
-
-        alert("Digite seu nome.");
+        alert("Entre no sistema primeiro.");
 
         return;
 
@@ -83,6 +175,14 @@ function apostar() {
     }
 
 
+    const valor =
+        Number(
+            document.getElementById(
+                "valor"
+            ).value
+        );
+
+
     if (!valor || valor <= 0) {
 
         alert("Digite um valor válido.");
@@ -92,34 +192,14 @@ function apostar() {
     }
 
 
-    if (valor > saldo) {
-
-        alert("Saldo insuficiente.");
-
-        return;
-
-    }
-
-
-    saldo = saldo - valor;
-
-    document.getElementById(
-        "saldo"
-    ).textContent = saldo.toFixed(2);
-
-
     const aposta = {
 
         tipo: "aposta",
 
         dados: {
 
-            usuario: usuario,
-
             time: timeSelecionado,
-
             valor: valor,
-
             odd: oddSelecionada
 
         }
@@ -132,7 +212,19 @@ function apostar() {
     );
 
 
-    document.getElementById("valor").value = "";
+    document.getElementById(
+        "valor"
+    ).value = "";
+
+}
+
+
+function atualizarSaldo(saldo) {
+
+    document.getElementById(
+        "saldo"
+    ).textContent =
+        Number(saldo).toFixed(2);
 
 }
 
@@ -140,7 +232,9 @@ function apostar() {
 function mostrarAposta(aposta) {
 
     const mensagens =
-        document.getElementById("mensagens");
+        document.getElementById(
+            "mensagens"
+        );
 
 
     const elemento =
@@ -153,12 +247,35 @@ function mostrarAposta(aposta) {
     elemento.innerHTML = `
         <strong>${aposta.usuario}</strong>
         apostou
-        <strong>R$ ${Number(aposta.valor).toFixed(2)}</strong>
+        <strong>
+            R$ ${Number(aposta.valor).toFixed(2)}
+        </strong>
         em
         <strong>${aposta.time}</strong>
         (odd ${aposta.odd})
     `;
 
+
+    mensagens.prepend(elemento);
+
+}
+
+
+function adicionarMensagem(texto) {
+
+    const mensagens =
+        document.getElementById(
+            "mensagens"
+        );
+
+
+    const elemento =
+        document.createElement("div");
+
+
+    elemento.className = "mensagem";
+
+    elemento.textContent = texto;
 
     mensagens.prepend(elemento);
 

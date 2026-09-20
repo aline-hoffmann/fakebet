@@ -13,12 +13,12 @@ header {
     background: #171717;
     padding: 25px;
     text-align: center;
-    border-bottom: 3px solid #ef0ac5;
+    border-bottom: 3px solid #25d366;
 }
 
 header h1 {
     margin: 0;
-    color: #f76fd5;
+    color: #25d366;
     font-size: 36px;
 }
 
@@ -51,6 +51,26 @@ input {
     font-size: 16px;
 }
 
+button {
+    cursor: pointer;
+}
+
+#botaoEntrar {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background: #25d366;
+    color: #111;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#botaoEntrar:disabled {
+    background: #555;
+    cursor: not-allowed;
+}
+
 .times {
     display: flex;
     gap: 10px;
@@ -63,7 +83,6 @@ input {
     color: white;
     border: 1px solid #444;
     border-radius: 6px;
-    cursor: pointer;
 }
 
 .times button:hover {
@@ -72,7 +91,7 @@ input {
 
 .times span {
     display: block;
-    color: #ef0ac5;
+    color: #25d366;
     font-weight: bold;
     margin-top: 5px;
 }
@@ -82,14 +101,14 @@ input {
     padding: 14px;
     border: none;
     border-radius: 6px;
-    background: #ef0ac5;
+    background: #25d366;
     color: #111;
     font-weight: bold;
     font-size: 16px;
-    cursor: pointer;
 }
 
-#botaoApostar:hover {
+#botaoApostar:hover,
+#botaoEntrar:hover {
     opacity: 0.9;
 }
 
@@ -98,7 +117,7 @@ input {
     padding: 12px;
     margin: 8px 0;
     border-radius: 6px;
-    border-left: 4px solid #ef0ac5;
+    border-left: 4px solid #25d366;
 }
 
 .info {

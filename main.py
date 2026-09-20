@@ -1,4 +1,5 @@
 import os
+
 import tornado.ioloop
 import tornado.web
 
@@ -18,7 +19,9 @@ def criar_aplicacao():
 
     return tornado.web.Application([
         (r"/", MainHandler),
+
         (r"/websocket", BetWebSocket),
+
         (
             r"/static/(.*)",
             tornado.web.StaticFileHandler,

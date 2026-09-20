@@ -6,11 +6,17 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>FakeBet</title>
 
-    <link rel="stylesheet" href="/static/style.css">
+    <link
+        rel="stylesheet"
+        href="/static/style.css"
+    >
 
 </head>
 
@@ -20,7 +26,7 @@
 
         <h1>FAKEBET</h1>
 
-        <p>Simulador de apostas</p>
+        <p>Simulador de apostas esportivas</p>
 
     </header>
 
@@ -29,7 +35,7 @@
 
         <section class="usuario">
 
-            <label>Seu nome:</label>
+            <h2>Usuário</h2>
 
             <input
                 type="text"
@@ -37,9 +43,18 @@
                 placeholder="Digite seu nome"
             >
 
+            <button
+                id="botaoEntrar"
+                onclick="entrar()"
+            >
+                Entrar
+            </button>
+
             <p>
                 Saldo fictício:
-                <strong>R$ <span id="saldo">1000.00</span></strong>
+                <strong>
+                    R$ <span id="saldo">0.00</span>
+                </strong>
             </p>
 
         </section>
@@ -54,12 +69,16 @@
 
             <div class="times">
 
-                <button onclick="selecionarTime('Grêmio', 2.90)">
+                <button
+                    onclick="selecionarTime('Grêmio', 1.90)"
+                >
                     Grêmio
-                    <span>2.90</span>
+                    <span>1.90</span>
                 </button>
 
-                <button onclick="selecionarTime('Internacional', 2.10)">
+                <button
+                    onclick="selecionarTime('Internacional', 2.10)"
+                >
                     Internacional
                     <span>2.10</span>
                 </button>
@@ -75,12 +94,16 @@
 
             <div class="times">
 
-                <button onclick="selecionarTime('Flamengo', 1.75)">
+                <button
+                    onclick="selecionarTime('Flamengo', 1.75)"
+                >
                     Flamengo
                     <span>1.75</span>
                 </button>
 
-                <button onclick="selecionarTime('Palmeiras', 2.30)">
+                <button
+                    onclick="selecionarTime('Palmeiras', 2.30)"
+                >
                     Palmeiras
                     <span>2.30</span>
                 </button>
@@ -96,12 +119,16 @@
 
             <div class="times">
 
-                <button onclick="selecionarTime('Corinthians', 2.00)">
+                <button
+                    onclick="selecionarTime('Corinthians', 2.00)"
+                >
                     Corinthians
                     <span>2.00</span>
                 </button>
 
-                <button onclick="selecionarTime('São Paulo', 1.95)">
+                <button
+                    onclick="selecionarTime('São Paulo', 1.95)"
+                >
                     São Paulo
                     <span>1.95</span>
                 </button>
@@ -116,7 +143,7 @@
             <h2>Fazer aposta</h2>
 
             <p>
-                Time:
+                Time selecionado:
                 <strong id="timeSelecionado">
                     nenhum
                 </strong>
@@ -125,10 +152,15 @@
             <input
                 type="number"
                 id="valor"
+                min="1"
+                step="0.01"
                 placeholder="Valor da aposta"
             >
 
-            <button id="botaoApostar" onclick="apostar()">
+            <button
+                id="botaoApostar"
+                onclick="apostar()"
+            >
                 Apostar
             </button>
 
