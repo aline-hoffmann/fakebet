@@ -1,44 +1,60 @@
 let socket;
 
+let jogoSelecionado = null;
+
 let timeSelecionado = null;
+
 let oddSelecionada = null;
+
 let usuarioRegistrado = false;
 
 
 function conectar() {
 
     socket = new WebSocket(
-        "ws://" + window.location.host + "/websocket"
+        "ws://" +
+        window.location.host +
+        "/websocket"
     );
 
 
     socket.onopen = function() {
 
-        console.log("Conectado ao servidor WebSocket");
+        console.log(
+            "Conectado ao servidor WebSocket"
+        );
 
     };
 
 
     socket.onmessage = function(event) {
 
-        const mensagem = JSON.parse(event.data);
+        const mensagem =
+            JSON.parse(event.data);
 
 
-        if (mensagem.tipo === "usuario_registrado") {
+        if (
+            mensagem.tipo ===
+            "usuario_registrado"
+        ) {
 
             usuarioRegistrado = true;
+
 
             atualizarSaldo(
                 mensagem.dados.saldo
             );
 
+
             document.getElementById(
                 "usuario"
             ).disabled = true;
 
+
             document.getElementById(
                 "botaoEntrar"
             ).disabled = true;
+
 
             adicionarMensagem(
                 "Você entrou como " +
@@ -48,7 +64,10 @@ function conectar() {
         }
 
 
-        else if (mensagem.tipo === "saldo_atualizado") {
+        else if (
+            mensagem.tipo ===
+            "saldo_atualizado"
+        ) {
 
             atualizarSaldo(
                 mensagem.dados.saldo
@@ -57,7 +76,10 @@ function conectar() {
         }
 
 
-        else if (mensagem.tipo === "nova_aposta") {
+        else if (
+            mensagem.tipo ===
+            "nova_aposta"
+        ) {
 
             mostrarAposta(
                 mensagem.dados
@@ -66,7 +88,22 @@ function conectar() {
         }
 
 
-        else if (mensagem.tipo === "erro") {
+        else if (
+            mensagem.tipo ===
+            "resultado_jogo"
+        ) {
+
+            mostrarResultado(
+                mensagem.dados
+            );
+
+        }
+
+
+        else if (
+            mensagem.tipo ===
+            "erro"
+        ) {
 
             alert(
                 mensagem.dados.mensagem
@@ -79,7 +116,10 @@ function conectar() {
 
     socket.onclose = function() {
 
-        console.log("Conexão encerrada");
+        console.log(
+            "Conexão WebSocket encerrada"
+        );
+
 
         adicionarMensagem(
             "Conexão com o servidor encerrada."
@@ -90,7 +130,9 @@ function conectar() {
 
     socket.onerror = function() {
 
-        console.log("Erro no WebSocket");
+        console.log(
+            "Erro na conexão WebSocket"
+        );
 
     };
 
@@ -107,16 +149,23 @@ function entrar() {
 
     if (!usuario) {
 
-        alert("Digite seu nome.");
+        alert(
+            "Digite seu nome."
+        );
 
         return;
 
     }
 
 
-    if (socket.readyState !== WebSocket.OPEN) {
+    if (
+        socket.readyState !==
+        WebSocket.OPEN
+    ) {
 
-        alert("O servidor ainda não está conectado.");
+        alert(
+            "O servidor ainda não está conectado."
+        );
 
         return;
 
@@ -128,29 +177,42 @@ function entrar() {
         tipo: "entrar",
 
         dados: {
+
             usuario: usuario
+
         }
 
     };
 
 
     socket.send(
-        JSON.stringify(mensagem)
+        JSON.stringify(
+            mensagem
+        )
     );
 
 }
 
 
-function selecionarTime(time, odd) {
+function selecionarTime(
+    jogo,
+    time,
+    odd
+) {
+
+    jogoSelecionado = jogo;
 
     timeSelecionado = time;
+
     oddSelecionada = odd;
 
 
     document.getElementById(
         "timeSelecionado"
     ).textContent =
-        time + " - odd " + odd;
+        time +
+        " - odd " +
+        odd;
 
 }
 
@@ -159,7 +221,9 @@ function apostar() {
 
     if (!usuarioRegistrado) {
 
-        alert("Entre no sistema primeiro.");
+        alert(
+            "Entre no sistema primeiro."
+        );
 
         return;
 
@@ -168,7 +232,9 @@ function apostar() {
 
     if (!timeSelecionado) {
 
-        alert("Escolha um time.");
+        alert(
+            "Escolha um time."
+        );
 
         return;
 
@@ -183,9 +249,14 @@ function apostar() {
         );
 
 
-    if (!valor || valor <= 0) {
+    if (
+        !valor ||
+        valor <= 0
+    ) {
 
-        alert("Digite um valor válido.");
+        alert(
+            "Digite um valor válido."
+        );
 
         return;
 
@@ -198,9 +269,17 @@ function apostar() {
 
         dados: {
 
-            time: timeSelecionado,
-            valor: valor,
-            odd: oddSelecionada
+            jogo:
+                jogoSelecionado,
+
+            time:
+                timeSelecionado,
+
+            valor:
+                valor,
+
+            odd:
+                oddSelecionada
 
         }
 
@@ -208,7 +287,9 @@ function apostar() {
 
 
     socket.send(
-        JSON.stringify(aposta)
+        JSON.stringify(
+            aposta
+        )
     );
 
 
@@ -219,17 +300,23 @@ function apostar() {
 }
 
 
-function atualizarSaldo(saldo) {
+function atualizarSaldo(
+    saldo
+) {
 
     document.getElementById(
         "saldo"
     ).textContent =
-        Number(saldo).toFixed(2);
+        Number(
+            saldo
+        ).toFixed(2);
 
 }
 
 
-function mostrarAposta(aposta) {
+function mostrarAposta(
+    aposta
+) {
 
     const mensagens =
         document.getElementById(
@@ -238,30 +325,83 @@ function mostrarAposta(aposta) {
 
 
     const elemento =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
-    elemento.className = "mensagem";
+    elemento.className =
+        "mensagem";
 
 
     elemento.innerHTML = `
-        <strong>${aposta.usuario}</strong>
-        apostou
         <strong>
-            R$ ${Number(aposta.valor).toFixed(2)}
+            ${aposta.usuario}
         </strong>
+
+        apostou
+
+        <strong>
+            R$
+            ${Number(
+                aposta.valor
+            ).toFixed(2)}
+        </strong>
+
         em
-        <strong>${aposta.time}</strong>
+
+        <strong>
+            ${aposta.time}
+        </strong>
+
         (odd ${aposta.odd})
     `;
 
 
-    mensagens.prepend(elemento);
+    mensagens.prepend(
+        elemento
+    );
 
 }
 
 
-function adicionarMensagem(texto) {
+function mostrarResultado(
+    dados
+) {
+
+    const elemento =
+        document.getElementById(
+            "resultado-" +
+            dados.jogo
+        );
+
+
+    if (elemento) {
+
+        elemento.textContent =
+            "Resultado: " +
+            dados.vencedor +
+            " venceu!";
+
+        elemento.classList.add(
+            "finalizado"
+        );
+
+    }
+
+
+    adicionarMensagem(
+        "🏆 " +
+        dados.vencedor +
+        " venceu a partida!"
+    );
+
+}
+
+
+function adicionarMensagem(
+    texto
+) {
 
     const mensagens =
         document.getElementById(
@@ -270,14 +410,22 @@ function adicionarMensagem(texto) {
 
 
     const elemento =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
-    elemento.className = "mensagem";
+    elemento.className =
+        "mensagem";
 
-    elemento.textContent = texto;
 
-    mensagens.prepend(elemento);
+    elemento.textContent =
+        texto;
+
+
+    mensagens.prepend(
+        elemento
+    );
 
 }
 

@@ -38,6 +38,19 @@ if __name__ == "__main__":
 
     app.listen(8888)
 
+    print("================================")
+    print("        FAKEBET INICIADA")
+    print("================================")
+    print("Acesse: http://localhost:8888")
+
+    tornado.ioloop.IOLoop.current().start()
+
+if __name__ == "__main__":
+
+    app = criar_aplicacao()
+
+    app.listen(8888)
+
     print("FakeBet rodando!")
     print("Acesse: http://localhost:8888")
 

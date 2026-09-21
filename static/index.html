@@ -20,171 +20,285 @@
 
 </head>
 
+
 <body>
 
-    <header>
+<header>
 
-        <h1>FAKEBET</h1>
+    <h1>FAKEBET</h1>
 
-        <p>Simulador de apostas esportivas</p>
+    <p>Simulador de apostas esportivas</p>
 
-    </header>
-
-
-    <main>
-
-        <section class="usuario">
-
-            <h2>Usuário</h2>
-
-            <input
-                type="text"
-                id="usuario"
-                placeholder="Digite seu nome"
-            >
-
-            <button
-                id="botaoEntrar"
-                onclick="entrar()"
-            >
-                Entrar
-            </button>
-
-            <p>
-                Saldo fictício:
-                <strong>
-                    R$ <span id="saldo">0.00</span>
-                </strong>
-            </p>
-
-        </section>
+</header>
 
 
-        <h2>Jogos disponíveis</h2>
+<main>
 
 
-        <section class="jogo">
+    <section class="usuario">
 
-            <h3>Grêmio x Internacional</h3>
+        <h2>Usuário</h2>
 
-            <div class="times">
+        <input
+            type="text"
+            id="usuario"
+            placeholder="Digite seu nome"
+        >
 
-                <button
-                    onclick="selecionarTime('Grêmio', 1.90)"
-                >
-                    Grêmio
-                    <span>1.90</span>
-                </button>
+        <button
+            id="botaoEntrar"
+            onclick="entrar()"
+        >
+            Entrar
+        </button>
 
-                <button
-                    onclick="selecionarTime('Internacional', 2.10)"
-                >
-                    Internacional
-                    <span>2.10</span>
-                </button>
+        <p>
+            Saldo fictício:
 
-            </div>
+            <strong>
+                R$
+                <span id="saldo">
+                    0.00
+                </span>
+            </strong>
+        </p>
 
-        </section>
-
-
-        <section class="jogo">
-
-            <h3>Flamengo x Palmeiras</h3>
-
-            <div class="times">
-
-                <button
-                    onclick="selecionarTime('Flamengo', 1.75)"
-                >
-                    Flamengo
-                    <span>1.75</span>
-                </button>
-
-                <button
-                    onclick="selecionarTime('Palmeiras', 2.30)"
-                >
-                    Palmeiras
-                    <span>2.30</span>
-                </button>
-
-            </div>
-
-        </section>
+    </section>
 
 
-        <section class="jogo">
-
-            <h3>Corinthians x São Paulo</h3>
-
-            <div class="times">
-
-                <button
-                    onclick="selecionarTime('Corinthians', 2.00)"
-                >
-                    Corinthians
-                    <span>2.00</span>
-                </button>
-
-                <button
-                    onclick="selecionarTime('São Paulo', 1.95)"
-                >
-                    São Paulo
-                    <span>1.95</span>
-                </button>
-
-            </div>
-
-        </section>
+    <h2>Jogos disponíveis</h2>
 
 
-        <section class="apostar">
+    <section class="jogo">
 
-            <h2>Fazer aposta</h2>
+        <h3>
+            Grêmio x Internacional
+        </h3>
 
-            <p>
-                Time selecionado:
-                <strong id="timeSelecionado">
-                    nenhum
-                </strong>
-            </p>
-
-            <input
-                type="number"
-                id="valor"
-                min="1"
-                step="0.01"
-                placeholder="Valor da aposta"
-            >
+        <div class="times">
 
             <button
-                id="botaoApostar"
-                onclick="apostar()"
+                onclick="
+                    selecionarTime(
+                        'gremio-inter',
+                        'Grêmio',
+                        1.90
+                    )
+                "
             >
-                Apostar
+
+                Grêmio
+
+                <span>
+                    1.90
+                </span>
+
             </button>
 
-        </section>
+
+            <button
+                onclick="
+                    selecionarTime(
+                        'gremio-inter',
+                        'Internacional',
+                        2.10
+                    )
+                "
+            >
+
+                Internacional
+
+                <span>
+                    2.10
+                </span>
+
+            </button>
+
+        </div>
 
 
-        <section class="feed">
+        <p
+            class="status"
+            id="resultado-gremio-inter"
+        >
+            Resultado: aguardando...
+        </p>
 
-            <h2>Apostas em tempo real</h2>
-
-            <div id="mensagens">
-
-                <p class="info">
-                    Aguardando apostas...
-                </p>
-
-            </div>
-
-        </section>
-
-    </main>
+    </section>
 
 
-    <script src="/static/app.js"></script>
+    <section class="jogo">
+
+        <h3>
+            Flamengo x Palmeiras
+        </h3>
+
+        <div class="times">
+
+            <button
+                onclick="
+                    selecionarTime(
+                        'fla-palmeiras',
+                        'Flamengo',
+                        1.75
+                    )
+                "
+            >
+
+                Flamengo
+
+                <span>
+                    1.75
+                </span>
+
+            </button>
+
+
+            <button
+                onclick="
+                    selecionarTime(
+                        'fla-palmeiras',
+                        'Palmeiras',
+                        2.30
+                    )
+                "
+            >
+
+                Palmeiras
+
+                <span>
+                    2.30
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <p
+            class="status"
+            id="resultado-fla-palmeiras"
+        >
+            Resultado: aguardando...
+        </p>
+
+    </section>
+
+
+    <section class="jogo">
+
+        <h3>
+            Corinthians x São Paulo
+        </h3>
+
+        <div class="times">
+
+            <button
+                onclick="
+                    selecionarTime(
+                        'corinthians-sao-paulo',
+                        'Corinthians',
+                        2.00
+                    )
+                "
+            >
+
+                Corinthians
+
+                <span>
+                    2.00
+                </span>
+
+            </button>
+
+
+            <button
+                onclick="
+                    selecionarTime(
+                        'corinthians-sao-paulo',
+                        'São Paulo',
+                        1.95
+                    )
+                "
+            >
+
+                São Paulo
+
+                <span>
+                    1.95
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <p
+            class="status"
+            id="resultado-corinthians-sao-paulo"
+        >
+            Resultado: aguardando...
+        </p>
+
+    </section>
+
+
+    <section class="apostar">
+
+        <h2>Fazer aposta</h2>
+
+        <p>
+            Time selecionado:
+
+            <strong
+                id="timeSelecionado"
+            >
+                nenhum
+            </strong>
+        </p>
+
+
+        <input
+            type="number"
+            id="valor"
+            min="1"
+            step="0.01"
+            placeholder="Valor da aposta"
+        >
+
+
+        <button
+            id="botaoApostar"
+            onclick="apostar()"
+        >
+            Apostar
+        </button>
+
+    </section>
+
+
+    <section class="feed">
+
+        <h2>
+            Apostas em tempo real
+        </h2>
+
+        <div id="mensagens">
+
+            <p class="info">
+                Aguardando apostas...
+            </p>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<script src="/static/app.js"></script>
+
 
 </body>
 
