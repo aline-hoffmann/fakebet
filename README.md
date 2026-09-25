@@ -20,7 +20,7 @@ pip install tornado
 
 Depois, inicie o servidor.
 ```
-python3 main.py
+python main.py
 ```
 
 Em seguida, no navegador, acesse:
